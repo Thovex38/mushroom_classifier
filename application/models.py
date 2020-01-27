@@ -44,3 +44,23 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+
+
+
+class PredictionsHistory(db.Model):
+    """Model for predictiion history."""
+
+    __tablename__ = 'hist-pred-users'
+
+    id = db.Column(db.Integer,
+                   primary_key=True)
+
+    predictions = db.Column(db.String(100),
+                     nullable=False,
+                     unique=False)
+
+    created_at = db.Column(db.String(60),
+                        index=False,
+                        primary_key=True,
+                        nullable=True)

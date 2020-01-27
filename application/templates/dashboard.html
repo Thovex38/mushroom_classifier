@@ -87,6 +87,12 @@
         <br>
         <h1>Predicted Mushroom eatability:</h1>
         <p style="font-size:50px">{{ result }}</p>
+        <h1>History:</h1>
+        {% for history_temp in result_history %}
+            <p style="font-size:20px">
+            <td>Result:{{history_temp.predictions}}:{{history_temp.created_at}}</td>
+            </p>
+        {% endfor %}
         {% endif %}
     </div>
     <a href="{{ url_for('auth_bp.logout_page') }}">Log out</a>

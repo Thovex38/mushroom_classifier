@@ -8,6 +8,8 @@ import pandas as pd
 import numpy as np
 from joblib import dump, load
 from .forms import MushroomForm
+from .models import db,PredictionsHistory
+import datetime
 
 # Blueprint Configuration
 main_bp = Blueprint('main_bp', __name__,
@@ -49,14 +51,19 @@ def predict():
     predictions = model.predict(features)[0]
     res = ("eatable" if predictions else "poisonous")
     print(predictions)
-
+    update_history = PredictionsHistory(id=current_user.id,predictions=res,created_at=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+    db.session.add(update_history)
+    db.session.commit()
+    res_history = PredictionsHistory.query.filter_by(id=current_user.id).all()
+    temp = list(res_history)
     return render_template('dashboard.html',
                            title='Mushroom Classifier',
                            template='dashboard-template',
                            current_user=current_user,
                            body="Mushroom Classifier",
                            form=MushroomForm(),
-                           result=res
+                           result=res,
+                           result_history=res_history
                            )
 
 @app.route('/results',methods=['POST'])

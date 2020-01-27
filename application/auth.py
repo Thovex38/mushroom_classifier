@@ -67,7 +67,7 @@ def signup_page():
                 db.session.add(user)
                 db.session.commit()
                 login_user(user)
-                return redirect(url_for('main_bp.dashboard'))
+                return redirect(url_for('main_bp.index'))
             flash('A user already exists with that email address.')
             return redirect(url_for('auth_bp.signup_page'))
     # GET: Serve Sign-up page
