@@ -7,6 +7,7 @@ from flask_login import login_required
 import pandas as pd
 import numpy as np
 from joblib import dump, load
+from .forms import MushroomForm
 
 # Blueprint Configuration
 main_bp = Blueprint('main_bp', __name__,
@@ -20,30 +21,24 @@ with open(f'application/data/rf.mdl', 'rb') as f:
 with open(f'application/data/model_columns.pkl', 'rb') as f:
     model_columns = load(f)
 
-# @main_bp.route('/', methods=['GET'])
-# @login_required
-# def dashboard():
-#     """Serve logged in Dashboard."""
-#     return render_template('dashboard.html',
-#                            title='Flask-Login Tutorial.',
-#                            template='dashboard-template',
-#                            current_user=current_user,
-#                            body="You are now logged in!")
-
-
-
 @main_bp.route('/', methods=['GET'])
 @login_required
 def index():
     """Serve logged in Dashboard."""
-    return render_template("index.html")
-
+    return render_template('dashboard.html',
+                           title='Mushroom Classifier',
+                           template='dashboard-template',
+                           current_user=current_user,
+                           body="Mushroom Classifier",
+                           form=MushroomForm())
 
 
 @app.route('/predict', methods=['POST'])
 @login_required
 def predict():
-
+    """User sign-up page."""
+    mushroom_form = MushroomForm(request.form)
+    # POST: Sign user in
     input_form = pd.DataFrame(request.form,index=[0])
     features = pd.get_dummies(input_form)
     for col in model_columns:
@@ -55,7 +50,14 @@ def predict():
     res = ("eatable" if predictions else "poisonous")
     print(predictions)
 
-    return render_template('index.html',result=res)
+    return render_template('dashboard.html',
+                           title='Mushroom Classifier',
+                           template='dashboard-template',
+                           current_user=current_user,
+                           body="Mushroom Classifier",
+                           form=MushroomForm(),
+                           result=res
+                           )
 
 @app.route('/results',methods=['POST'])
 def results():

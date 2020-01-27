@@ -10,6 +10,85 @@
 
     {% if current_user.is_authenticated %}
     <p>Hi {{ current_user.name }}!</p>
+    <form action="{{ url_for('predict') }}" method="POST">
+        <div class="form-group">
+              {{ form.cap_shape.label }} {{ form.cap_shape() }}
+        </div>
+        <div class="form-group">
+              {{ form.cap_surface.label }} {{ form.cap_surface() }}
+        </div>
+        <div class="form-group">
+              {{ form.cap_color.label }} {{ form.cap_color() }}
+        </div>
+        <div class="form-group">
+              {{ form.bruises.label }} {{ form.bruises() }}
+        </div>
+        <div class="form-group">
+              {{ form.odor.label }} {{ form.odor() }}
+        </div>
+        <div class="form-group">
+              {{ form.gill_attachment.label }} {{ form.gill_attachment() }}
+        </div>
+        <div class="form-group">
+              {{ form.gill_spacing.label }} {{ form.gill_spacing() }}
+        </div>
+        <div class="form-group">
+              {{ form.gill_size.label }} {{ form.gill_size() }}
+        </div>
+        <div class="form-group">
+              {{ form.gill_color.label }} {{ form.gill_color() }}
+        </div>
+        <div class="form-group">
+              {{ form.stalk_shape.label }} {{ form.stalk_shape() }}
+        </div>
+        <div class="form-group">
+              {{ form.stalk_root.label }} {{ form.stalk_root() }}
+        </div>
+        <div class="form-group">
+              {{ form.stalk_surface_above_ring.label }} {{ form.stalk_surface_above_ring() }}
+        </div>
+        <div class="form-group">
+              {{ form.stalk_surface_below_ring.label }} {{ form.stalk_surface_below_ring() }}
+        </div>
+        <div class="form-group">
+              {{ form.stalk_color_above_ring.label }} {{ form.stalk_color_above_ring() }}
+        </div>
+        <div class="form-group">
+              {{ form.stalk_surface_below_ring.label }} {{ form.stalk_surface_below_ring() }}
+        </div>
+        <div class="form-group">
+              {{ form.veil_type.label }} {{ form.veil_type() }}
+        </div>
+        <div class="form-group">
+              {{ form.veil_color.label }} {{ form.veil_color() }}
+        </div>
+        <div class="form-group">
+              {{ form.ring_number.label }} {{ form.ring_number() }}
+        </div>
+        <div class="form-group">
+              {{ form.ring_type.label }} {{ form.ring_type() }}
+        </div>
+        <div class="form-group">
+              {{ form.spore_print_color.label }} {{ form.spore_print_color() }}
+        </div>
+        <div class="form-group">
+              {{ form.population.label }} {{ form.population() }}
+        </div>
+        <div class="form-group">
+              {{ form.habitat.label }} {{ form.habitat() }}
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+    <div class="result" align="center">
+        {% if result %}
+        <br>
+        <br>
+        <h1>Predicted Mushroom eatability:</h1>
+        <p style="font-size:50px">{{ result }}</p>
+        {% endif %}
+    </div>
     <a href="{{ url_for('auth_bp.logout_page') }}">Log out</a>
   {% endif %}
 {% endblock %}
