@@ -89,8 +89,8 @@
         <p style="font-size:50px">{{ result }}</p>
         <h1>History:</h1>
         {% for history_temp in result_history %}
-            <p style="font-size:20px">
-            <td>Result:{{history_temp.predictions}}:{{history_temp.created_at}}</td>
+            <p style="font-size:15px">
+            Result:{{history_temp.predictions}}:{{history_temp.created_at}}
             </p>
         {% endfor %}
         {% endif %}

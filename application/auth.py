@@ -21,7 +21,7 @@ def login_page():
     """User login page."""
     # Bypass Login screen if user is logged in
     if current_user.is_authenticated:
-        return redirect(url_for('main_bp.dashboard'))
+        return redirect(url_for('main_bp.index'))
     login_form = LoginForm(request.form)
     # POST: Create user and redirect them to the app
     if request.method == 'POST':
