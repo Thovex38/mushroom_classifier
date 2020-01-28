@@ -20,8 +20,11 @@ compile_auth_assets(app)
 with open(f'application/data/rf.mdl', 'rb') as f:
     model = load(f)
 
-with open(f'application/data/model_columns.pkl', 'rb') as f:
-    model_columns = load(f)
+with open(f'application/data/features_columns.pkl', 'rb') as f:
+    features_columns = load(f)
+
+with open(f'application/data/feature_encoding.pkl', 'rb') as f:
+    feature_encoding = load(f)
 
 @main_bp.route('/', methods=['GET'])
 @login_required
@@ -42,12 +45,10 @@ def predict():
     mushroom_form = MushroomForm(request.form)
     # POST: Sign user in
     input_form = pd.DataFrame(request.form,index=[0])
-    features = pd.get_dummies(input_form)
-    for col in model_columns:
-        if col not in features.columns:
-            features[col] = 0
-    features = np.array(features)
-    print("TODO deal with case where feature never appear in dataset like ring type c")
+    # one hot encoding
+    features = input_form[features_columns]
+    features = feature_encoding.transform(features).toarray()
+    # prediction
     predictions = model.predict(features)[0]
     res = ("eatable" if predictions else "poisonous")
     print(predictions)
@@ -71,11 +72,10 @@ def results():
 
     data = request.get_json(force=True)
     data = pd.DataFrame.from_dict(data)
-    features = pd.get_dummies(data)
-    for col in model_columns:
-        if col not in features.columns:
-            features[col] = 0
-    features = np.array(features)
+    # one hot encoding
+    features = data[features_columns]
+    features = feature_encoding.transform(features).toarray()
+    #predictions
     predictions = model.predict(features)
     output = {"Request "+ str(i) : "eatable" if predictions[i] else "poisonous" for i in range(0, len(predictions))}
     headers = {"Content-Type": "application/json"}
