@@ -41,7 +41,7 @@ def login_page():
     # GET: Serve Log-in page
     return render_template('login.html',
                            form=LoginForm(),
-                           title='Log in | Flask-Login Tutorial.',
+                           title='Log in | Mushroom Classifier.',
                            template='login-page',
                            body="Log in with your User account.")
 
@@ -72,7 +72,7 @@ def signup_page():
             return redirect(url_for('auth_bp.signup_page'))
     # GET: Serve Sign-up page
     return render_template('/signup.html',
-                           title='Create an Account | Flask-Login Tutorial.',
+                           title='Create an Account | Mushroom Classifier.',
                            form=SignupForm(),
                            template='signup-page',
                            body="Sign up for a user account.")

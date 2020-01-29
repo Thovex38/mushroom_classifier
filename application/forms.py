@@ -55,8 +55,8 @@ class MushroomForm(Form):
         , ('e', 'red'), ('w', 'white')
         , ('y', 'yellow'), ('r', 'green')
                                                          ])
-
     bruises = SelectField(u'Enter bruises', choices=[('t', 'bruises'), ('f', 'no')])
+
     odor = SelectField(u'Enter odor', choices=[('a', 'almond'), ('l', 'anise')
         , ('c', 'creosote'), ('y', 'fishy')
         , ('f', 'foul'), ('m', 'musty')
@@ -80,36 +80,35 @@ class MushroomForm(Form):
         , ('r', 'green'), ('o', 'orange')
         , ('p', 'pink'), ('u', 'purple')
         , ('e', 'red'), ('w', 'white')
-        , ('y', 'yellow')
+        , ('y', 'yellow'), ('b', 'buff')
                                                            ])
 
     stalk_shape = SelectField(u'Enter stalk shape', choices=[('e', 'enlarging'), ('t', 'tapering')])
 
     stalk_root = SelectField(u'Enter stalk root', choices=[('b', 'bulbous'), ('c', 'club')
         , ('u', 'cup'), ('e', 'equal')
-        , ('r', 'green'), ('o', 'orange')
         , ('z', 'rhizomorphs'), ('r', 'rooted')
         , ('?', 'missing')
                                                            ])
 
     stalk_surface_above_ring = SelectField(u'Enter stalk surface above ring', choices=[('f', 'fibrous'), ('y', 'scaly')
-        , ('k', 'zilky'), ('s', 'smooth')
+        , ('k', 'silky'), ('s', 'smooth')
                                                                                   ])
 
     stalk_surface_below_ring = SelectField(u'Enter stalk surface below ring', choices=[('f', 'fibrous'), ('y', 'scaly')
-        , ('k', 'zilky'), ('s', 'smooth')
+        , ('k', 'silky'), ('s', 'smooth')
                                                                                   ])
 
     stalk_color_above_ring = SelectField(u'Enter stalk color above ring', choices=[('n', 'brown'), ('b', 'buff')
         , ('c', 'cinnamon'), ('g', 'gray')
-        , ('p', 'pink'), ('u', 'purple')
+        , ('p', 'pink'), ('o', 'orange')
         , ('e', 'red'), ('w', 'white')
         , ('y', 'yellow')
                                                                               ])
 
     stalk_color_below_ring = SelectField(u'Enter stalk color below ring', choices=[('n', 'brown'), ('b', 'buff')
         , ('c', 'cinnamon'), ('g', 'gray')
-        , ('p', 'pink'), ('u', 'purple')
+        , ('p', 'pink'), ('o', 'orange')
         , ('e', 'red'), ('w', 'white')
         , ('y', 'yellow')
                                                                               ])
@@ -122,17 +121,17 @@ class MushroomForm(Form):
     ring_number = SelectField(u'Enter ring number', choices=[('n', 'none'), ('o', 'one')
         , ('t', 'two')])
 
-    ring_type = SelectField(u'Enter ring type', choices=[('n', 'none'), ('o', 'one')
-        , ('e', 'evanescent'), ('c', 'cobwebby')
+    ring_type = SelectField(u'Enter ring type', choices=[('e', 'evanescent'), ('c', 'cobwebby')
         , ('f', 'flaring'), ('l', 'large')
         , ('n', 'none'), ('p', 'pendant')
-        , ('s', 'sheating'), ('z', 'zone')
+        , ('s', 'sheathing'), ('z', 'zone')
                                                                               ])
 
     spore_print_color = SelectField(u'Enter spore print color', choices=[('n', 'brown'), ('k', 'black')
         , ('h', 'chocolate'), ('b', 'buff')
         , ('r', 'green'), ('o', 'orange')
-        ,('w', 'white'), ('y', 'yellow')
+        , ('w', 'white'), ('y', 'yellow')
+        , ('u', 'purple')
                                                                          ])
 
     population = SelectField(u'Enter population', choices=[('a', 'abundant'), ('c', 'clustered')

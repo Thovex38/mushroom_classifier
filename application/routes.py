@@ -5,10 +5,9 @@ from flask import current_app as app
 from .assets import compile_auth_assets
 from flask_login import login_required
 import pandas as pd
-import numpy as np
-from joblib import dump, load
+from joblib import load
 from .forms import MushroomForm
-from .models import db,PredictionsHistory
+from .models import db, PredictionsHistory
 import datetime
 
 # Blueprint Configuration
@@ -25,6 +24,9 @@ with open(f'application/data/features_columns.pkl', 'rb') as f:
 
 with open(f'application/data/feature_encoding.pkl', 'rb') as f:
     feature_encoding = load(f)
+
+with open(f'application/data/mapping_label_encoded.pkl', 'rb') as f:
+    mapping_label_encoded = load(f)
 
 @main_bp.route('/', methods=['GET'])
 @login_required
@@ -44,19 +46,19 @@ def predict():
     """User sign-up page."""
     mushroom_form = MushroomForm(request.form)
     # POST: Sign user in
-    input_form = pd.DataFrame(request.form,index=[0])
+    input_form = pd.DataFrame(request.form, index=[0])
     # one hot encoding
     features = input_form[features_columns]
     features = feature_encoding.transform(features).toarray()
     # prediction
     predictions = model.predict(features)[0]
-    res = ("eatable" if predictions else "poisonous")
+    res = ("poisonous" if predictions == mapping_label_encoded["p"] else "eatable")
     print(predictions)
-    update_history = PredictionsHistory(id=current_user.id,predictions=res,created_at=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+    update_history = PredictionsHistory(id=current_user.id, predictions=res,
+                                        created_at=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
     db.session.add(update_history)
     db.session.commit()
     res_history = PredictionsHistory.query.filter_by(id=current_user.id).all()
-    temp = list(res_history)
     return render_template('dashboard.html',
                            title='Mushroom Classifier',
                            template='dashboard-template',
@@ -67,16 +69,17 @@ def predict():
                            result_history=res_history
                            )
 
-@app.route('/results',methods=['POST'])
-def results():
 
+@app.route('/results', methods=['POST'])
+def results():
     data = request.get_json(force=True)
     data = pd.DataFrame.from_dict(data)
     # one hot encoding
     features = data[features_columns]
     features = feature_encoding.transform(features).toarray()
-    #predictions
+    # prediction
     predictions = model.predict(features)
-    output = {"Request "+ str(i) : "eatable" if predictions[i] else "poisonous" for i in range(0, len(predictions))}
+    output = {"Request " + str(i): "poisonous" if predictions[i] == mapping_label_encoded["p"] else "edible" for i in range(0, len(predictions))}
     headers = {"Content-Type": "application/json"}
     return make_response(jsonify(output), 200, headers)
+
