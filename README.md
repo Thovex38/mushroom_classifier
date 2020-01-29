@@ -1,7 +1,7 @@
 # mushroom_classifier
 
 # requirements  
-docker installed or pipenv
+- docker installed or pipenv
 
 # Run on docker on local
 - from base directory build the image: docker build . -t {some tag name a}  -f ./Dockerfile
