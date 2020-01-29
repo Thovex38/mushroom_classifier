@@ -15,6 +15,7 @@ joblib = "*"
 flask-login = "*"
 flask-assets = "*"
 wtforms = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"
