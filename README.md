@@ -1,12 +1,13 @@
 # mushroom_classifier
 
 # requirements  
-docker installed
+docker installed or pipenv
 
 # Run on docker on local
-docker build . -t {some tag name a}  -f ./Dockerfile 
+1) from base directory build the image: docker build . -t {some tag name a}  -f ./Dockerfile 
+1') Alternatively you can pull the image from my docker hub account: docker pull germai83/test-mushroom-api
 
-docker run --rm --name test-api -p 5000:5000 -d {tag name a}
+2)docker run --rm --name {name of the instance} -p 5000:5000 -d {tag name of the docker image}
 
 Results on : http://0.0.0.0:5000/
 
