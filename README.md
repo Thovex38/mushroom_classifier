@@ -22,4 +22,4 @@
 - go to base directory and type: pipenv run python application/request.py 
 
 # Train the classifier
-- The classifier is in classifier.py . The model choose is a Random Forest. The categorical features are encoded using one hot encoder and the model is evaluated using training-test split and k fold cross validation.
+- The classifier is in classifier.py . The model is a Random Forest. The categorical features are encoded using one hot encoder and the model is evaluated using training-test split,k fold cross validation and accuracy as evaluation metrics .
